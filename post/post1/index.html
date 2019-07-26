@@ -112,9 +112,9 @@
   <meta property="og:description" content="`&lt;-` vs `=` is not just a matter of style..."><meta property="og:image" content="https://shansabri.github.io/post/post1/featured.png">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2019-07-17T16:36:57-07:00">
+  <meta property="article:published_time" content="2019-07-24T16:36:57-07:00">
   
-  <meta property="article:modified_time" content="2019-07-17T16:36:57-07:00">
+  <meta property="article:modified_time" content="2019-07-24T16:36:57-07:00">
   
 
   
@@ -316,8 +316,8 @@
 
 
 
-<meta content="2019-07-17 16:36:57 -0700 PDT" itemprop="datePublished">
-<meta content="2019-07-17 16:36:57 -0700 PDT" itemprop="dateModified">
+<meta content="2019-07-24 16:36:57 -0700 PDT" itemprop="datePublished">
+<meta content="2019-07-24 16:36:57 -0700 PDT" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -330,7 +330,7 @@
     
       
     
-    <time>Jul 17, 2019</time>
+    <time>Jul 24, 2019</time>
   </span>
   
 
@@ -394,8 +394,8 @@
 
 
 
-<meta content="2019-07-17 16:36:57 -0700 PDT" itemprop="datePublished">
-<meta content="2019-07-17 16:36:57 -0700 PDT" itemprop="dateModified">
+<meta content="2019-07-24 16:36:57 -0700 PDT" itemprop="datePublished">
+<meta content="2019-07-24 16:36:57 -0700 PDT" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -408,7 +408,7 @@
     
       
     
-    <time>Jul 17, 2019</time>
+    <time>Jul 24, 2019</time>
   </span>
   
 
@@ -456,7 +456,7 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p>The operators <code>&lt;-</code> and <code>=</code> can be used, almost interchangeably, to assign to variable in the same environment. Yet, <code>&lt;-</code> is preferred and advised in R Coding style guides from <a href="https://google.github.io/styleguide/Rguide.xml#assignment" target="_blank">Google</a> and <a href="http://adv-r.had.co.nz/Style.html" target="_blank">Hadley</a>. Some users pointed out on <a href="https://twitter.com/_colinfay/status/1006139974377443328?lang=en" target="_blank">Twitter</a> that this makes code slightly more difficult to read if you come from another language. <code>&lt;-</code> is used in <code>F#</code>, <code>OCaml</code>, <code>R</code> and <code>S</code> to my knowledge. Even if <code>&lt;-</code> is generally rare in programming, I guess its meaning is quite easy to grasp, though. Nonetheless this led me down a rabbit hole trying to determine the functional differences with these two assignment operators.</p>
+      <p>The operators <code>&lt;-</code> and <code>=</code> can be used, almost interchangeably, to assign to variable in the same environment. Yet, <code>&lt;-</code> is preferred and advised in R Coding style guides from <a href="https://google.github.io/styleguide/Rguide.xml#assignment" target="_blank">Google</a> and <a href="http://adv-r.had.co.nz/Style.html" target="_blank">Hadley</a>. Some users pointed out on <a href="https://twitter.com/_colinfay/status/1006139974377443328?lang=en" target="_blank">Twitter</a> that this makes code slightly more difficult to read if you come from another programming language. <code>&lt;-</code> is used in <code>F#</code>, <code>OCaml</code>, <code>R</code> and <code>S</code> to my knowledge. Even if <code>&lt;-</code> is generally rare in programming, I suppose its meaning is quite easy to grasp (it&rsquo;s an assignment arrow). Nonetheless this led me down a rabbit hole trying to determine the functional differences with these two assignment operators.</p>
 
 <p>This is not just a matter of style and interpretability. There are functional consequences if assignment opperators in R are using incorrectly. R will treat <code>=</code> as a named function argument before it will interpret it as assignment. As an example of where this makes a practical difference:</p>
 

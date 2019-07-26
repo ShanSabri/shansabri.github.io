@@ -6,7 +6,7 @@
     <description>Recent content in R on </description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jul 2019 16:36:57 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jul 2019 16:36:57 -0700</lastBuildDate>
     
 	    <atom:link href="https://shansabri.github.io/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>Assignment operators in R</title>
       <link>https://shansabri.github.io/post/post1/</link>
-      <pubDate>Wed, 17 Jul 2019 16:36:57 -0700</pubDate>
+      <pubDate>Wed, 24 Jul 2019 16:36:57 -0700</pubDate>
       
       <guid>https://shansabri.github.io/post/post1/</guid>
-      <description>&lt;p&gt;The operators &lt;code&gt;&amp;lt;-&lt;/code&gt; and &lt;code&gt;=&lt;/code&gt; can be used, almost interchangeably, to assign to variable in the same environment. Yet, &lt;code&gt;&amp;lt;-&lt;/code&gt; is preferred and advised in R Coding style guides from &lt;a href=&#34;https://google.github.io/styleguide/Rguide.xml#assignment&#34; target=&#34;_blank&#34;&gt;Google&lt;/a&gt; and &lt;a href=&#34;http://adv-r.had.co.nz/Style.html&#34; target=&#34;_blank&#34;&gt;Hadley&lt;/a&gt;. Some users pointed out on &lt;a href=&#34;https://twitter.com/_colinfay/status/1006139974377443328?lang=en&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; that this makes code slightly more difficult to read if you come from another language. &lt;code&gt;&amp;lt;-&lt;/code&gt; is used in &lt;code&gt;F#&lt;/code&gt;, &lt;code&gt;OCaml&lt;/code&gt;, &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;S&lt;/code&gt; to my knowledge. Even if &lt;code&gt;&amp;lt;-&lt;/code&gt; is generally rare in programming, I guess its meaning is quite easy to grasp, though. Nonetheless this led me down a rabbit hole trying to determine the functional differences with these two assignment operators.&lt;/p&gt;
+      <description>&lt;p&gt;The operators &lt;code&gt;&amp;lt;-&lt;/code&gt; and &lt;code&gt;=&lt;/code&gt; can be used, almost interchangeably, to assign to variable in the same environment. Yet, &lt;code&gt;&amp;lt;-&lt;/code&gt; is preferred and advised in R Coding style guides from &lt;a href=&#34;https://google.github.io/styleguide/Rguide.xml#assignment&#34; target=&#34;_blank&#34;&gt;Google&lt;/a&gt; and &lt;a href=&#34;http://adv-r.had.co.nz/Style.html&#34; target=&#34;_blank&#34;&gt;Hadley&lt;/a&gt;. Some users pointed out on &lt;a href=&#34;https://twitter.com/_colinfay/status/1006139974377443328?lang=en&#34; target=&#34;_blank&#34;&gt;Twitter&lt;/a&gt; that this makes code slightly more difficult to read if you come from another programming language. &lt;code&gt;&amp;lt;-&lt;/code&gt; is used in &lt;code&gt;F#&lt;/code&gt;, &lt;code&gt;OCaml&lt;/code&gt;, &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;S&lt;/code&gt; to my knowledge. Even if &lt;code&gt;&amp;lt;-&lt;/code&gt; is generally rare in programming, I suppose its meaning is quite easy to grasp (it&amp;rsquo;s an assignment arrow). Nonetheless this led me down a rabbit hole trying to determine the functional differences with these two assignment operators.&lt;/p&gt;
 
 &lt;p&gt;This is not just a matter of style and interpretability. There are functional consequences if assignment opperators in R are using incorrectly. R will treat &lt;code&gt;=&lt;/code&gt; as a named function argument before it will interpret it as assignment. As an example of where this makes a practical difference:&lt;/p&gt;
 
