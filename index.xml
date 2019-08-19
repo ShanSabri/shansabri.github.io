@@ -6,10 +6,87 @@
     <description>Recent content on </description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jul 2019 16:36:57 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 19 Aug 2019 15:48:02 -0700</lastBuildDate>
     
 	    <atom:link href="https://shansabri.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Encapsulating functions to promote stricter functional programming</title>
+      <link>https://shansabri.github.io/post/post2/</link>
+      <pubDate>Mon, 19 Aug 2019 15:48:02 -0700</pubDate>
+      
+      <guid>https://shansabri.github.io/post/post2/</guid>
+      <description>&lt;p&gt;&lt;center&gt;&lt;em&gt;&amp;ldquo;Encapsulation hides information not to faciliate fraud, but to prevent mistakes.&amp;rdquo;&lt;/em&gt;&lt;/center&gt;
+&lt;div style=&#34;text-align: right&#34;&gt; &lt;em&gt;-Bjarne Stroustrup, original implementor of C++&lt;/em&gt; &lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Imagine the following scenario:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;y_global &amp;lt;- 42
+add_nums &amp;lt;- function(x, y, z) { x + y_global + z }
+add_nums(1,2,3)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## [1] 46
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;46?! What’s happening here is that R is using a variable outside of
+&lt;code&gt;add_nums&lt;/code&gt; scope. R does not have strict pragma such as other languages
+(e.g. &lt;code&gt;use strict&lt;/code&gt; in Perl) and this can be a bit bothersome.
+And as a consequence this happens to me way more often than I’d like to admit,
+and I think this can be really dangerous, as the error is silent.&lt;/p&gt;
+
+&lt;p&gt;I came across this StackOverflow
+&lt;a href=&#34;https://stackoverflow.com/questions/6216968/r-force-local-scope&#34; target=&#34;_blank&#34;&gt;thread&lt;/a&gt;
+that suggests a workaround to wrap a function with &lt;code&gt;local&lt;/code&gt;. It’s a
+clever idea but I think it’s a bit messy and has a level of complexity
+that could be simplified. So I came up with a strategy to avoid these
+situations, which is to encapsulate functions in their own environment
+detached from &lt;code&gt;global_env&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here, I have a helper function that I use in most of the analyses I do.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;encapsulate &amp;lt;- function(fxn) {
+  nenv &amp;lt;- new.env(parent = baseenv())
+  environment(fxn) &amp;lt;- nenv
+  return(fxn)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using it is really simple, just wrap &lt;code&gt;encapsulate&lt;/code&gt; around the function
+definition. As an example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;y_global &amp;lt;- 42
+add_nums &amp;lt;- encapsulate(function(x, y, z) {x + y_global + z})
+add_nums(1,2,3) # ERROR
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## Error in add_nums(1, 2, 3): object &#39;y_global&#39; not found
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# fixing the issue
+add_nums &amp;lt;- encapsulate(function(x, y, z) {x + y + z})
+add_nums(1,2,3) # SUCCESS
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## [1] 6
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The benefits of using such approach is that [1] promote functional
+programming by disallowing global variables to be used inside function
+body and [2] package functions must be namespaced explicitly (e.g.
+&lt;code&gt;dplyr::select&lt;/code&gt;). The only downfall that I can think of for such an approach is the overhead
+of environmental space which could potentially be a problem when loading large data in memory with little RAM,
+and having a bit more keystrokes in your code.&lt;/p&gt;
+
+&lt;p&gt;Now one thing to keep in mind is that if you are writing R packages, the
+check process will flag this kind of error with no shenanigans like
+this. Also note that the auto search up the environment path is a key
+feature of the R programming language…&lt;/p&gt;
+
+&lt;p&gt;The takeaway here is to not expect static code checking tools to find all your mistakes. Check your code with tests! Having test functions built using the &lt;code&gt;testthat&lt;/code&gt; package has a lot of benefits and highlighting such issues so they don’t get pass the debugger.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Assignment operators in R</title>
