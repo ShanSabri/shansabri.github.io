@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.1f0b82a80e38f96a13adab79961dbea1.css">
+  <link rel="stylesheet" href="/css/academic.min.86be757f1f4d547e884bf0757b242687.css">
 
   
 
@@ -298,7 +298,7 @@
 
 <div class="article-header d-xl-none">
   <div class="featured-image" style="background-image: url('/post/post1/featured_hu00af46f415708fc759670605c0859687_31424_800x0_resize_lanczos_2.png');"></div>
-  <span class="article-header-caption">ref.: <a href="http://adv-r.had.co.nz/Style.html">Hadley</a></span>
+  <span class="article-header-caption">ref.: <a href="http://adv-r.had.co.nz/Style.html" target="_blank">Hadley</a></span>
 </div>
 
 
@@ -316,8 +316,8 @@
 
 
 
-<meta content="2019-07-24 16:36:57 -0700 PDT" itemprop="datePublished">
-<meta content="2019-07-24 16:36:57 -0700 PDT" itemprop="dateModified">
+<meta content="2019-07-24 16:36:57 -0700 -0700" itemprop="datePublished">
+<meta content="2019-07-24 16:36:57 -0700 -0700" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -377,7 +377,7 @@
     <div class="col-6">
       <div class="split-header-image">
         <img src="/post/post1/featured_hu00af46f415708fc759670605c0859687_31424_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
-        <span class="article-header-caption">ref.: <a href="http://adv-r.had.co.nz/Style.html">Hadley</a></span>
+        <span class="article-header-caption">ref.: <a href="http://adv-r.had.co.nz/Style.html" target="_blank">Hadley</a></span>
       </div>
     </div>
   </div>
@@ -394,8 +394,8 @@
 
 
 
-<meta content="2019-07-24 16:36:57 -0700 PDT" itemprop="datePublished">
-<meta content="2019-07-24 16:36:57 -0700 PDT" itemprop="dateModified">
+<meta content="2019-07-24 16:36:57 -0700 -0700" itemprop="datePublished">
+<meta content="2019-07-24 16:36:57 -0700 -0700" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -456,23 +456,38 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p>The operators <code>&lt;-</code> and <code>=</code> can be used, almost interchangeably, to assign to variable in the same environment. Yet, <code>&lt;-</code> is preferred and advised in R Coding style guides from <a href="https://google.github.io/styleguide/Rguide.xml#assignment">Google</a> and <a href="http://adv-r.had.co.nz/Style.html">Hadley</a>. Some users pointed out on <a href="https://twitter.com/_colinfay/status/1006139974377443328?lang=en">Twitter</a> that this makes code slightly more difficult to read if you come from another programming language. <code>&lt;-</code> is used in <code>F#</code>, <code>OCaml</code>, <code>R</code> and <code>S</code> to my knowledge. Even if <code>&lt;-</code> is generally rare in programming, I suppose its meaning is quite easy to grasp (it&rsquo;s an assignment arrow). Nonetheless this led me down a rabbit hole trying to determine the functional differences with these two assignment operators.</p>
+      <p>The operators <code>&lt;-</code> and <code>=</code> can be used, almost interchangeably, to assign to variable in the same environment. Yet, <code>&lt;-</code> is preferred and advised in R Coding style guides from <a href="https://google.github.io/styleguide/Rguide.xml#assignment" target="_blank">Google</a> and <a href="http://adv-r.had.co.nz/Style.html" target="_blank">Hadley</a>. Some users pointed out on <a href="https://twitter.com/_colinfay/status/1006139974377443328?lang=en" target="_blank">Twitter</a> that this makes code slightly more difficult to read if you come from another programming language. <code>&lt;-</code> is used in <code>F#</code>, <code>OCaml</code>, <code>R</code> and <code>S</code> to my knowledge. Even if <code>&lt;-</code> is generally rare in programming, I suppose its meaning is quite easy to grasp (it&rsquo;s an assignment arrow). Nonetheless this led me down a rabbit hole trying to determine the functional differences with these two assignment operators.</p>
+
 <p>This is not just a matter of style and interpretability. There are functional consequences if assignment opperators in R are using incorrectly. R will treat <code>=</code> as a named function argument before it will interpret it as assignment. As an example of where this makes a practical difference:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">within</span>(<span style="color:#a6e22e">data.frame</span>(a<span style="color:#f92672">=</span><span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">2</span>)), b <span style="color:#f92672">=</span> a^2) <span style="color:#75715e"># Error</span>
-</code></pre></div><pre><code>## Error in eval(substitute(expr), e): argument is missing, with no default
+
+<pre><code class="language-r">within(data.frame(a=rnorm(2)), b = a^2) # Error
 </code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">within</span>(<span style="color:#a6e22e">data.frame</span>(a<span style="color:#f92672">=</span><span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">2</span>)), b <span style="color:#f92672">&lt;-</span> a^2) <span style="color:#75715e"># Success</span>
-</code></pre></div><pre><code>##            a          b
+
+<pre><code>## Error in eval(substitute(expr), e): argument is missing, with no default
+</code></pre>
+
+<pre><code class="language-r">within(data.frame(a=rnorm(2)), b &lt;- a^2) # Success
+</code></pre>
+
+<pre><code>##            a          b
 ## 1 -0.5221077 0.27259643
 ## 2  0.1855074 0.03441299
 </code></pre>
+
 <p>Or when you want to handle a possible
-exception:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">tryCatch</span>(x <span style="color:#f92672">=</span> <span style="color:#a6e22e">runif</span>(<span style="color:#ae81ff">5</span>)) <span style="color:#75715e"># Error</span>
-</code></pre></div><pre><code>## Error in tryCatchList(expr, classes, parentenv, handlers): argument &quot;expr&quot; is missing, with no default
+    exception:</p>
+
+<pre><code class="language-r">tryCatch(x = runif(5)) # Error
 </code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">tryCatch</span>(x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">runif</span>(<span style="color:#ae81ff">5</span>)) <span style="color:#75715e"># Success</span>
-</code></pre></div><p>So, if you use <code>=</code> for assignment, you have to remember to treat these situations differently. Which results in your code needing extra levels of brackets/braces, or mixing <code>=</code> and <code>&lt;-</code>. Or you could just use <code>&lt;-</code> everywhere you intend to do assignment and not worry about the edge cases. Keep in mind that this is not to be confused with the other, less common, assignment operators in R (e.g., <code>&lt;&lt;-</code>, <code>-&gt;&gt;</code>, <code>:=</code>, <code>_</code>). I&rsquo;ll hold off an explanation for a future blog post.</p>
+
+<pre><code>## Error in tryCatchList(expr, classes, parentenv, handlers): argument &quot;expr&quot; is missing, with no default
+</code></pre>
+
+<pre><code class="language-r">tryCatch(x &lt;- runif(5)) # Success
+</code></pre>
+
+<p>So, if you use <code>=</code> for assignment, you have to remember to treat these situations differently. Which results in your code needing extra levels of brackets/braces, or mixing <code>=</code> and <code>&lt;-</code>. Or you could just use <code>&lt;-</code> everywhere you intend to do assignment and not worry about the edge cases. Keep in mind that this is not to be confused with the other, less common, assignment operators in R (e.g., <code>&lt;&lt;-</code>, <code>-&gt;&gt;</code>, <code>:=</code>, <code>_</code>). I&rsquo;ll hold off an explanation for a future blog post.</p>
+
 <p>IMO, <code>&lt;-</code> adds some charm to the use of the R programming language. I take pride in it for that reason.</p>
 
     </div>
@@ -721,7 +736,7 @@ exception:</p>
     
     
     
-    <script src="/js/academic.min.e5372221df876d5d52eda40edaa58012.js"></script>
+    <script src="/js/academic.min.174c04eddb854712a9c7aaae9021446f.js"></script>
 
     
 

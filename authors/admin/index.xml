@@ -10,5 +10,19 @@
 	    <atom:link href="https://shansabri.github.io/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title></title>
+      <link>https://shansabri.github.io/authors/admin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://shansabri.github.io/authors/admin/</guid>
+      <description>&lt;p&gt;As a scientist of computational biology at &lt;a href=&#34;https://sana.com/&#34; target=&#34;_blank&#34;&gt;Sana&lt;/a&gt;, Shan leads bioinformatics efforts in pre-clinical studies for Sana’s hypoimmune PSC-derived pancreatic islet cell therapy, in development for the treatment of type 1 diabetes; see &lt;a href=&#34;https://sana.com/our-pipeline/&#34; target=&#34;_blank&#34;&gt;SC451&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Prior to Sana, he leveraged novel high-throughput approaches at &lt;a href=&#34;https://arsenalbio.com/&#34; target=&#34;_blank&#34;&gt;ArsenalBio&lt;/a&gt; to better understand and engineer the immune system to eradicate solid tumors.&lt;/p&gt;
+
+&lt;p&gt;Shan has completed his PhD in the labs of &lt;a href=&#34;https://plathlab.dgsom.ucla.edu/pages/&#34; target=&#34;_blank&#34;&gt;Kathrin Plath&lt;/a&gt; and &lt;a href=&#34;http://www.biolchem.ucla.edu/labs/ernst/&#34; target=&#34;_blank&#34;&gt;Jason Ernst&lt;/a&gt; at UCLA where he applied multi-omic assays and developed novel computational methods to establish universal principles of cell fate transitions using somatic-to-iPSC conversion as a platform.&lt;/p&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>

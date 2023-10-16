@@ -82,7 +82,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.min.1f0b82a80e38f96a13adab79961dbea1.css">
+  <link rel="stylesheet" href="/css/academic.min.86be757f1f4d547e884bf0757b242687.css">
 
   
 
@@ -313,8 +313,8 @@
 
 
 
-<meta content="2019-08-18 15:48:02 -0700 PDT" itemprop="datePublished">
-<meta content="2019-08-18 15:48:02 -0700 PDT" itemprop="dateModified">
+<meta content="2019-08-18 15:48:02 -0700 -0700" itemprop="datePublished">
+<meta content="2019-08-18 15:48:02 -0700 -0700" itemprop="dateModified">
 
 <div class="article-metadata">
 
@@ -376,53 +376,73 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <!-- raw HTML omitted -->
+      <p><center><em>&ldquo;Encapsulation hides information not to faciliate fraud, but to prevent mistakes.&rdquo;</em></center>
+<div style="text-align: right"> <em>-Bjarne Stroustrup, original implementor of C++</em> </div></p>
+
 <p>Imagine the following scenario:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">y_global <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">42</span>
-add_nums <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x, y, z) { x <span style="color:#f92672">+</span> y_global <span style="color:#f92672">+</span> z }
-<span style="color:#a6e22e">add_nums</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>)
-</code></pre></div><pre><code>## [1] 46
+
+<pre><code class="language-r">y_global &lt;- 42
+add_nums &lt;- function(x, y, z) { x + y_global + z }
+add_nums(1,2,3)
 </code></pre>
+
+<pre><code>## [1] 46
+</code></pre>
+
 <p>46?! What’s happening here is that R is using a variable outside of
 <code>add_nums</code> scope. R does not have strict pragma such as other languages
 (e.g. <code>use strict</code> in Perl) and this can be a bit bothersome.
 And as a consequence this happens to me way more often than I’d like to admit,
 and I think this can be really dangerous, as the error is silent.</p>
+
 <p>I came across this StackOverflow
-<a href="https://stackoverflow.com/questions/6216968/r-force-local-scope">thread</a>
+<a href="https://stackoverflow.com/questions/6216968/r-force-local-scope" target="_blank">thread</a>
 that suggests a workaround to wrap a function with <code>local</code>. It’s a
 clever idea but I think it’s a bit messy and has a level of complexity
 that could be simplified. So I came up with a strategy to avoid these
 situations, which is to encapsulate functions in their own environment
 detached from <code>global_env</code>.</p>
+
 <p>Here, I have a helper function that I use in most of the analyses I do.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">encapsulate <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(fxn) {
-  nenv <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">new.env</span>(parent <span style="color:#f92672">=</span> <span style="color:#a6e22e">baseenv</span>())
-  <span style="color:#a6e22e">environment</span>(fxn) <span style="color:#f92672">&lt;-</span> nenv
-  <span style="color:#a6e22e">return</span>(fxn)
+
+<pre><code class="language-r">encapsulate &lt;- function(fxn) {
+  nenv &lt;- new.env(parent = baseenv())
+  environment(fxn) &lt;- nenv
+  return(fxn)
 }
-</code></pre></div><p>Using it is really simple, just wrap <code>encapsulate</code> around the function
+</code></pre>
+
+<p>Using it is really simple, just wrap <code>encapsulate</code> around the function
 definition. As an example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">y_global <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">42</span>
-add_nums <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">encapsulate</span>(<span style="color:#a6e22e">function</span>(x, y, z) {x <span style="color:#f92672">+</span> y_global <span style="color:#f92672">+</span> z})
-<span style="color:#a6e22e">add_nums</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e"># ERROR</span>
-</code></pre></div><pre><code>## Error in add_nums(1, 2, 3): object 'y_global' not found
+
+<pre><code class="language-r">y_global &lt;- 42
+add_nums &lt;- encapsulate(function(x, y, z) {x + y_global + z})
+add_nums(1,2,3) # ERROR
 </code></pre>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#75715e"># fixing the issue</span>
-add_nums <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">encapsulate</span>(<span style="color:#a6e22e">function</span>(x, y, z) {x <span style="color:#f92672">+</span> y <span style="color:#f92672">+</span> z})
-<span style="color:#a6e22e">add_nums</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e"># SUCCESS</span>
-</code></pre></div><pre><code>## [1] 6
+
+<pre><code>## Error in add_nums(1, 2, 3): object 'y_global' not found
 </code></pre>
+
+<pre><code class="language-r"># fixing the issue
+add_nums &lt;- encapsulate(function(x, y, z) {x + y + z})
+add_nums(1,2,3) # SUCCESS
+</code></pre>
+
+<pre><code>## [1] 6
+</code></pre>
+
 <p>The benefits of using such approach is that [1] promote functional
 programming by disallowing global variables to be used inside function
 body and [2] package functions must be namespaced explicitly (e.g.
 <code>dplyr::select</code>). The only downfall that I can think of for such an approach is the overhead
 of environmental space which could potentially be a problem when loading large data in memory with little RAM,
 and having a bit more keystrokes in your code.</p>
+
 <p>Now one thing to keep in mind is that if you are writing R packages, the
 check process will flag this kind of error with no shenanigans like
 this. Also note that the auto search up the environment path is a key
 feature of the R programming language…</p>
+
 <p>The takeaway here is to not expect static code checking tools to find all your mistakes. Check your code with tests! Having test functions built using the <code>testthat</code> package has a lot of benefits and highlighting such issues so they don’t get pass the debugger.</p>
 
     </div>
@@ -681,7 +701,7 @@ feature of the R programming language…</p>
     
     
     
-    <script src="/js/academic.min.e5372221df876d5d52eda40edaa58012.js"></script>
+    <script src="/js/academic.min.174c04eddb854712a9c7aaae9021446f.js"></script>
 
     
 
